@@ -16,59 +16,43 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // Obtener todos los productos
     @GetMapping
     public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+        return productService.getAll();
     }
 
-    // Obtener un producto por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
-        Optional<Product> product = productService.getProductById(id);
-        if (product.isPresent()) {
-            return ResponseEntity.ok(product.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Product> getProductById(@PathVariable int id) {
+        Optional<Product> product = productService.getById(id);
+        return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo producto
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product newProduct = productService.saveOrUpdateProduct(product);
-        return ResponseEntity.ok(newProduct);
+    public Product createProduct(@RequestBody Product product) {
+        return productService.save(product);
     }
 
-    // Actualizar un producto existente
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product productDetails) {
-        Optional<Product> product = productService.getProductById(id);
+    public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product productDetails) {
+        Optional<Product> product = productService.getById(id);
         if (product.isPresent()) {
-            Product existingProduct = product.get();
-            existingProduct.setCode(productDetails.getCode());
-            existingProduct.setName(productDetails.getName());
-            existingProduct.setPriceBase(productDetails.getPriceBase());
-            existingProduct.setStock(productDetails.getStock());
-            existingProduct.setPublishDate(productDetails.getPublishDate());
-            existingProduct.setCategory(productDetails.getCategory());
-
-            Product updatedProduct = productService.saveOrUpdateProduct(existingProduct);
+            Product updatedProduct = product.get();
+            updatedProduct.setCode(productDetails.getCode());
+            updatedProduct.setName(productDetails.getName());
+            updatedProduct.setPriceBase(productDetails.getPriceBase());
+            updatedProduct.setStock(productDetails.getStock());
+            updatedProduct.setPublishDate(productDetails.getPublishDate());
+            updatedProduct.setCategory(productDetails.getCategory());
+            productService.save(updatedProduct);
             return ResponseEntity.ok(updatedProduct);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Eliminar un producto
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-        Optional<Product> product = productService.getProductById(id);
-        if (product.isPresent()) {
-            productService.deleteProduct(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
+        productService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

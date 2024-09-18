@@ -16,53 +16,38 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    // Obtener todas las categorías
     @GetMapping
     public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+        return categoryService.getAll();
     }
 
-    // Obtener una categoría por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
-        Optional<Category> category = categoryService.getCategoryById(id);
-        if (category.isPresent()) {
-            return ResponseEntity.ok(category.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
+        Optional<Category> category = categoryService.getById(id);
+        return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear una nueva categoría
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category newCategory = categoryService.saveOrUpdateCategory(category);
-        return ResponseEntity.ok(newCategory);
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.save(category);
     }
 
-    // Actualizar una categoría existente
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category categoryDetails) {
-        Optional<Category> category = categoryService.getCategoryById(id);
+    public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category categoryDetails) {
+        Optional<Category> category = categoryService.getById(id);
         if (category.isPresent()) {
-            Category existingCategory = category.get();
-            existingCategory.setName(categoryDetails.getName());
-            Category updatedCategory = categoryService.saveOrUpdateCategory(existingCategory);
+            Category updatedCategory = category.get();
+            updatedCategory.setName(categoryDetails.getName());
+            categoryService.save(updatedCategory);
             return ResponseEntity.ok(updatedCategory);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Eliminar una categoría
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
-        Optional<Category> category = categoryService.getCategoryById(id);
-        if (category.isPresent()) {
-            categoryService.deleteCategory(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
+        categoryService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
