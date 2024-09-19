@@ -1,9 +1,10 @@
 package com.factulink.fkb.api.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "clients")
@@ -27,8 +28,9 @@ public class Client {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "id_district", length = 20)
-    private District idDistrict;
+    @ManyToOne
+    @JoinColumn(name = "id_district", referencedColumnName = "id")
+    private District district;
 
     @ManyToOne
     @JoinColumn(name = "id_document", referencedColumnName = "id")
