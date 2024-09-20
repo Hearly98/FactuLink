@@ -1,4 +1,4 @@
-package com.factulink.fkb.api.service.impl;
+package com.factulink.fkb.api.implement;
 
 import com.factulink.fkb.api.model.Product;
 import com.factulink.fkb.api.repository.ProductRepository;
