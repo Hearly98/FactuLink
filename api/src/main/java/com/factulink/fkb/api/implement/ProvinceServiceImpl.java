@@ -27,7 +27,7 @@ public class ProvinceServiceImpl implements ProvinceService {
         if (!provinces.isEmpty()) {
             return new ResponseEntity<>(provinces, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("Error",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No existen registros",HttpStatus.NOT_FOUND);
         }
 
     }
@@ -45,7 +45,7 @@ public class ProvinceServiceImpl implements ProvinceService {
         if (province.isPresent()) {
             return new ResponseEntity<>(province.get(), HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("Error",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("El id no ha sido encontrado",HttpStatus.NOT_FOUND);
         }
     }
 
@@ -58,7 +58,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             dao.save(province1);
             return new ResponseEntity<>("Datos actualizados", HttpStatus.OK);
         }else {
-            return new ResponseEntity<>("Error",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Sin registros con ID:" + id,HttpStatus.NOT_FOUND);
         }
     }
 }
