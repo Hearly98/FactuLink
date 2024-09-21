@@ -2,7 +2,9 @@ package com.factulink.fkb.api.service;
 
 import com.factulink.fkb.api.model.Province;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface ProvinceService {
     public ResponseEntity<Object> getProvinces();
     public ResponseEntity<Object> addProvinces(Province province);
