@@ -3,6 +3,7 @@ package com.factulink.fkb.api.implement;
 import com.factulink.fkb.api.model.Document;
 import com.factulink.fkb.api.repository.DocumentRepository;
 import com.factulink.fkb.api.service.DocumentService;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
