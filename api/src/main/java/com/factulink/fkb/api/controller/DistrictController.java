@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class DistrictController {
     private final DistrictService districtService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Object> getAllDistricts(){
         return districtService.getDistricts();
     }

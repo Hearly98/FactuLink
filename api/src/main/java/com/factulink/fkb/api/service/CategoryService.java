@@ -1,36 +1,15 @@
 package com.factulink.fkb.api.service;
 
 import com.factulink.fkb.api.model.Category;
-import com.factulink.fkb.api.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class CategoryService {
+public interface CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    // Obtener todas las categorías
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    // Obtener una categoría por ID
-    public Optional<Category> getCategoryById(Integer id) {
-        return categoryRepository.findById(id);
-    }
-
-    // Guardar o actualizar una categoría
-    public Category saveOrUpdateCategory(Category category) {
-        return categoryRepository.save(category);
-    }
-
-    // Eliminar una categoría por ID
-    public void deleteCategory(Integer id) {
-        categoryRepository.deleteById(id);
-    }
+    public ResponseEntity<Object> getCategories();
+    public ResponseEntity<Object> addCategory(Category category);
+    public ResponseEntity<Object> getCategoryById(Integer id);
+    public ResponseEntity<Object> updateCategory(Category category, Integer id);
+    public ResponseEntity<Object> deleteCategory(Integer id);
 }
