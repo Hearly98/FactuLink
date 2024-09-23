@@ -1,36 +1,23 @@
 package com.factulink.fkb.api.service;
 
 import com.factulink.fkb.api.model.Product;
-import com.factulink.fkb.api.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class ProductService {
-
-    @Autowired
-    private ProductRepository productRepository;
+public interface ProductService {
 
     // Obtener todos los productos
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+    public ResponseEntity<Object> getAllProducts();
 
     // Obtener un producto por ID
-    public Optional<Product> getProductById(Integer id) {
-        return productRepository.findById(id);
-    }
+    public ResponseEntity<Object> getProductById(Integer id);
 
-    // Guardar o actualizar un producto
-    public Product saveOrUpdateProduct(Product product) {
-        return productRepository.save(product);
-    }
+    public ResponseEntity<Object> addProduct(Product product);
+
+    // Actualizar un producto
+    public ResponseEntity<Object> updateProduct(Product product, Integer id);
 
     // Eliminar un producto por ID
-    public void deleteProduct(Integer id) {
-        productRepository.deleteById(id);
-    }
+    public ResponseEntity<Object> deleteProduct(Integer id);
 }
