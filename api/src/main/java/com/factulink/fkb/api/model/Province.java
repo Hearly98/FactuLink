@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "provinces")
 @Data
@@ -24,5 +27,8 @@ public class Province {
 
     @ManyToOne
     @JoinColumn(name = "id_region", referencedColumnName = "id")
-    private Region idRegion;
+    private Region region;
+
+    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<District> districts = new ArrayList<>();
 }
