@@ -54,7 +54,7 @@ public class ClientServiceImpl implements ClientService{
         Optional<Client> clientExist = dao.findById(id);
         if (clientExist.isPresent()){
             Client client1 = clientExist.get();
-            client1.setNameClient(client1.getNameClient());
+            client1.setBusinessName(client1.getBusinessName());
             dao.save(client1);
             return new ResponseEntity<>("Datos actualizados", HttpStatus.OK);
         }else {

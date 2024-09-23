@@ -22,7 +22,7 @@ public class District {
     @Column(name = "name", length = 100)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_province", referencedColumnName = "id")
-    private Province idProvince;
+    private Province province;
 }
